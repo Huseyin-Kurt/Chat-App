@@ -40,7 +40,7 @@ io.on("connect",(socket) =>
     {
         const roomToUpdate=ChatRoomList.filter(existingRooms=>existingRooms.roomName===roomName)
 
-        roomActions.sendMessageToClient(socket,userName,message,roomToUpdate[0])
+        roomActions.addMessageToRoom(userName,message,roomToUpdate[0])
 
         io.to(roomToUpdate[0].roomName).emit("messageFromServer",roomToUpdate[0].messages)
 
