@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react"
 import { io } from "socket.io-client";
+import { useNavigate } from "react-router-dom";
 
 import "./LoginScreen.css"
-import createRoom from "./functions/createRoom"
 
 
 const LoginScreen = () => {
     
     const [nickName, setNickname] = useState("");
     const [roomName, setRoomName] = useState("");
+    
+    const navigate=useNavigate()
+
+    const buttonOnClick=() =>
+    {
+        navigate("/ChatRoom",{state:{currentRoom:roomName,currentUser:nickName}})
+    }
 
     return (
         <div className="container-div">
@@ -16,7 +23,7 @@ const LoginScreen = () => {
             <input onChange={e => (setNickname(e.target.value))} className="input" type="text"></input>
             <p className="field-name">Room Name</p>
             <input onChange={e => (setRoomName(e.target.value))} className="input" type="text"></input>
-            <button onClick={() => { createRoom(io,nickName, roomName) }} className="button" >Chat !</button>
+            <button onClick={buttonOnClick} className="button" >Chat !</button>
         </div>
     );
 }

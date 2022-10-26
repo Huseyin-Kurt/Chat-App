@@ -28,20 +28,38 @@ app.use(cors())
 
 io.on("connect",(socket) =>
 {
-    socket.on("createNewRoom",(roomName,userName) =>
+    socket.on("createNewRoom",(roomName,userName,callback) =>
     {
         const result=ChatRoomList.filter(existingRooms=>existingRooms.roomName===roomName)
+        socket.join(roomName)
+        
 
         if(result.length===0)
-        {
-            ChatRoomList.push(eventListener.createNewRoom(socket,roomName,userName))
+        {   
+            let newRoom=eventListener.createNewRoom(roomName,userName)
+            ChatRoomList.push(newRoom)
             
         }
 
         else
         {   
-            eventListener.joinExistingRoom(socket,result[0],userName)
+            eventListener.joinExistingRoom(result[0],userName)
+            
         }
+
+        const roomToUpdate=ChatRoomList.filter(existingRooms=>existingRooms.roomName===roomName)
+        io.to(roomToUpdate[0].roomName).emit("messageFromServer",roomToUpdate[0].messages)
+        
+    })
+
+    socket.on("sendMessageToServer",(roomName,userName,message) =>
+    {
+        const roomToUpdate=ChatRoomList.filter(existingRooms=>existingRooms.roomName===roomName)
+
+        eventListener.sendMessageToClient(socket,userName,message,roomToUpdate[0])
+
+        io.to(roomToUpdate[0].roomName).emit("messageFromServer",roomToUpdate[0].messages)
+
     })
 })
 

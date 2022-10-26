@@ -1,27 +1,27 @@
 const ChatRoom=require("../classes/ChatRoom.js")
 const Message=require("../classes/Message.js")
 
-const createNewRoom=(socket,roomName,userName) =>
+const createNewRoom=(roomName,userName) =>
 {
-    socket.join(roomName)
-    console.log("A new room has been created+ "+roomName)
-    const newChatRoom=new ChatRoom(roomName,userName)
+    const newChatRoom=new ChatRoom(roomName,userName,"createRoom")
+    
     return newChatRoom
 }
 
-const joinExistingRoom=(socket,existingChatRoom,userName) =>
+const joinExistingRoom=(existingChatRoom,userName) =>
 {
-    socket.join(existingChatRoom.roomName)
-
-    
-    existingChatRoom.messages.push(new Message(userName))
-    console.log(existingChatRoom)
-
-    
+    existingChatRoom.messages.push(new Message(userName,"joinRoom"))
 }
+
+const sendMessageToClient=(socket,userName,message,roomToUpdate) =>
+{
+    roomToUpdate.messages.push(new Message(userName,"userMessage",message))
+}
+
 
 
 module.exports={
     createNewRoom:createNewRoom,
     joinExistingRoom:joinExistingRoom,
+    sendMessageToClient:sendMessageToClient,
 }

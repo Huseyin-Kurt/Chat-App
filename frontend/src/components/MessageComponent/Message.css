@@ -1,0 +1,23 @@
+.message-div{
+    margin-top: 6vh;
+    display: flex;
+    flex-direction: row;
+}
+
+#system-message-div{
+    background-color: #67f211;
+}
+
+#system-message-p{
+    font-size: 25px;
+}
+
+#non-system-message-writer{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#non-system-message-content{
+    font-size: 18x;
+
+}
