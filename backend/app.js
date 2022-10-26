@@ -1,27 +1,14 @@
-const express=require("express")
-const http=require("http")
-const {Server}=require("socket.io")
-const cors=require("cors")
+const connection=require("./serverSetup.js")
 
 const roomActions=require("./src/functions/roomActions.js")
 const ChatRoom=require("./src/classes/ChatRoom")
 
+const io=connection.io
+const server=connection.server
+
 
 const ChatRoomList=[];
-
-const app=express()
-const server=http.createServer(app)
-const io=new Server(server,{
-    cors:{
-        origin:"http://localhost:3001",
-        methods:["GET","POST"]
-    }
-})
-
 const port=process.env.PORT||3001
-app.use(cors())
-
-
 
 io.on("connect",(socket) =>
 {
@@ -59,7 +46,6 @@ io.on("connect",(socket) =>
 
     })
 })
-
 
 
 server.listen(port,() =>
