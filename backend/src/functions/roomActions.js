@@ -8,7 +8,7 @@ const createNewRoom=(roomName,userName) =>
     return newChatRoom
 }
 
-const joinExistingRoom=(existingChatRoom,userName) =>
+const addUserToExistingRoom=(existingChatRoom,userName) =>
 {
     existingChatRoom.messages.push(new Message(userName,"joinRoom"))
 }
@@ -22,6 +22,6 @@ const sendMessageToClient=(socket,userName,message,roomToUpdate) =>
 
 module.exports={
     createNewRoom:createNewRoom,
-    joinExistingRoom:joinExistingRoom,
+    addUserToExistingRoom:addUserToExistingRoom,
     sendMessageToClient:sendMessageToClient,
 }

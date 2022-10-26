@@ -15,8 +15,8 @@ const Message=({messageWriter,messageContent}) =>
     {
         return(
             <div className="message-div" id="nonSystem-message-div">
-                <p id="non-system-message-writer">{messageWriter}</p>
-                <p d="non-system-message-content">{messageContent}</p>
+                <p id="non-system-message-writer">{messageWriter} :</p>
+                <p id="non-system-message-content">{messageContent}</p>
             </div>
         );
     }

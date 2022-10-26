@@ -3,10 +3,11 @@ const http=require("http")
 const {Server}=require("socket.io")
 const cors=require("cors")
 
-const eventListener=require("./src/functions/eventListener.js")
+const roomActions=require("./src/functions/roomActions.js")
 const ChatRoom=require("./src/classes/ChatRoom")
-const ChatRoomList=[];
 
+
+const ChatRoomList=[];
 
 const app=express()
 const server=http.createServer(app)
@@ -17,12 +18,8 @@ const io=new Server(server,{
     }
 })
 
-
 const port=process.env.PORT||3001
 app.use(cors())
-
-
-
 
 
 
@@ -36,14 +33,14 @@ io.on("connect",(socket) =>
 
         if(result.length===0)
         {   
-            let newRoom=eventListener.createNewRoom(roomName,userName)
+            let newRoom=roomActions.createNewRoom(roomName,userName)
             ChatRoomList.push(newRoom)
             
         }
 
         else
         {   
-            eventListener.joinExistingRoom(result[0],userName)
+            roomActions.addUserToExistingRoom(result[0],userName)
             
         }
 
@@ -56,15 +53,12 @@ io.on("connect",(socket) =>
     {
         const roomToUpdate=ChatRoomList.filter(existingRooms=>existingRooms.roomName===roomName)
 
-        eventListener.sendMessageToClient(socket,userName,message,roomToUpdate[0])
+        roomActions.sendMessageToClient(socket,userName,message,roomToUpdate[0])
 
         io.to(roomToUpdate[0].roomName).emit("messageFromServer",roomToUpdate[0].messages)
 
     })
 })
-
-
-
 
 
 

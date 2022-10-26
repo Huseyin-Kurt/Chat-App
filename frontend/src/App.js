@@ -2,7 +2,7 @@ import React from 'react';
 import {createBrowserRouter} from "react-router-dom";
 
 import LoginScreen from './components/LoginComponent/LoginScreen.js';
-import ChatRoom from './components/ChatRoom/ChatRoom.js';
+import ChatRoom from './components/ChatRoomComponent/ChatRoom.js';
 
 
 const App = createBrowserRouter([

@@ -1,5 +1,4 @@
 .message-div{
-    margin-top: 6vh;
     display: flex;
     flex-direction: row;
 }
@@ -19,5 +18,7 @@
 
 #non-system-message-content{
     font-size: 18x;
+    margin-left: 1vw;
+    margin-top: 3vh;
 
 }
